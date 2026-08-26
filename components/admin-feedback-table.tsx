@@ -18,7 +18,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
 
     const [originalStatus, setOriginalStatus] = useState<Record<number, string>>({})
 
-    const handleStatusChange = (postId:number, newStatus:string) => {
+    const handleStatusChange = (postId: number, newStatus: string) => {
         setPostStatus((prev) => ({
             ...prev,
             [postId]: newStatus,
@@ -45,14 +45,14 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
         //show loading toast 
         const loadingToast = toast.loading("Saving Status...");
         try {
-            const res = await fetch(`/api/feedback/${postId}/status`,{
-                method:"PATCH",
-                headers:{
+            const res = await fetch(`/api/feedback/${postId}/status`, {
+                method: "PATCH",
+                headers: {
                     "Content-type": "application/json"
                 },
-                body:JSON.stringify({status: postStatus[postId]})
+                body: JSON.stringify({ status: postStatus[postId] })
             })
-            if(!res.ok){
+            if (!res.ok) {
                 throw new Error("Failed to update status");
             }
 
@@ -61,7 +61,7 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
             toast.success("Feedback status updated successfully!");
             setEditingPostId(null)
         } catch (error) {
-            console.error("failed to update status",error);
+            console.error("failed to update status", error);
             toast.dismiss(loadingToast);
             toast.error("Failed to update Feedback status, Please try again.")
         }
@@ -135,7 +135,12 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
 
                                     <TableCell className="align-middle">
                                         {isEditing ? <>
-                                            <Select value={currentStatus} onValueChange={(value) => handleStatusChange(post.id, value)}>
+                                            <Select
+                                                value={currentStatus}
+                                                onValueChange={(value) => {
+                                                    if (value) handleStatusChange(post.id, value);
+                                                }}
+                                            >
 
                                                 <SelectTrigger className="w-[160px]">
 
@@ -153,14 +158,14 @@ export default function AdminFeedbackTable({ posts }: { posts: any[] }) {
 
                                                 </SelectTrigger>
 
-                                                <SelectContent className="min-w-[180px}">
+                                                <SelectContent className="min-w-[180px]">
                                                     {STATUS_ORDER.map((status) => {
                                                         const statusGroup = STATUS_GROUPS[status as keyof typeof STATUS_GROUPS];
                                                         const Icon = statusGroup.icon;
-                                                        return(
+                                                        return (
                                                             <SelectItem key={status} value={status}>
                                                                 <div className="flex items-center gap-2">
-                                                                    <Icon className="h-4 w-4"/>
+                                                                    <Icon className="h-4 w-4" />
                                                                     {statusGroup.title}
                                                                 </div>
                                                             </SelectItem>
