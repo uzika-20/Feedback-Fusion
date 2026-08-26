@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ThemeProvider from "@/components/theme-provider";
 import AuthProvider from "@/components/session-provider";
+import ToastFromParams from "@/components/toast-from-params";
+import { Suspense } from "react";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -22,7 +24,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <AuthProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
             {/* navbar */}
+            <Suspense fallback={null}>
             <Navbar />
+            <ToastFromParams/>
+            </Suspense>
             
             {/* main section */}
             <main className="flex-1 container mx-auto px-4 py-8">

@@ -1,5 +1,7 @@
 import { Bug, Key, Lightbulb, Palette, Sparkle, Wrench } from "lucide-react";
 
+export const CATEGORIES_TYPES = ["Feature", "Improvement", "Bug", "Design", "Other"]
+
 const CATEGORIES = {
     Feature: {
         bg: "bg-gradient-to-br from-blue-500 to-blue-600",

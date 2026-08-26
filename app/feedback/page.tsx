@@ -7,6 +7,7 @@ import { Car, Map, Plus, PlusIcon } from "lucide-react";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCategoryDesign } from "../data/category-data";
 import { Badge } from "@/components/ui/badge";
+import FeedbackList from "@/components/feedback-list";
 
 export default async function FeedbackPage() {
     const session = await auth();
@@ -17,7 +18,7 @@ export default async function FeedbackPage() {
     const posts = await prisma.post.findMany({
         include: {
             author: true,
-            vote: true
+            votes: true
         },
         orderBy: {
             createdAt: "desc",
@@ -75,7 +76,7 @@ export default async function FeedbackPage() {
                                                     </div>
                                                     <span className="font-meduim text-sm">{cat.category}</span>
                                                 </div>
-                                                <Badge variant="secondary"></Badge>
+                                                <Badge variant="secondary" className={`${design.light} ${design.text}`}>{cat._count}</Badge>
                                             </div>
                                         )
                                     })}
@@ -84,7 +85,9 @@ export default async function FeedbackPage() {
                         </Card>
                     </div>
                     {/* Main Content */}
-
+                    <div className="lg:col-span-3">
+                        <FeedbackList initialPosts={posts} userId={session?.user?.id} />
+                    </div>
                 </div>
             </div></>
     );

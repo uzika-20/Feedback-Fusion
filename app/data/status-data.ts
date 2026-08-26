@@ -1,14 +1,13 @@
 export const STATUS_ORDER = [
-    "under_review",
-    "planned",
-    "in-progress",
-    "completed"
-]
-
+  "UNDER_REVIEW",
+  "PLANNED",
+  "IN_PROGRESS",
+  "COMPLETED",
+];
 import { Eye, ListCheck, Clock, CheckCircle } from "lucide-react";
 
 export const STATUS_GROUPS = {
-  under_review: {
+  UNDER_REVIEW: {
     title: "Under Review",
     description: "New suggestions being evaluated",
     icon: Eye,
@@ -17,7 +16,7 @@ export const STATUS_GROUPS = {
     textColor: "text-gray-700 dark:text-gray-300",
     countColor: "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300",
   },
-  planned: {
+  PLANNED: {
     title: "Planned",
     description: "Features we're planning to work on",
     icon: ListCheck,
@@ -26,7 +25,7 @@ export const STATUS_GROUPS = {
     textColor: "text-blue-700 dark:text-blue-300",
     countColor: "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300",
   },
-  in_progress: {
+  IN_PROGRESS: {
     title: "In Progress",
     description: "Currently being developed",
     icon: Clock,
@@ -35,7 +34,7 @@ export const STATUS_GROUPS = {
     textColor: "text-yellow-700 dark:text-yellow-300",
     countColor: "bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300",
   },
-  completed: {
+  COMPLETED: {
     title: "Completed",
     description: "Recently shipped features",
     icon: CheckCircle,

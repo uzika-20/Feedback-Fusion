@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
-import { Map, MessageSquare, Settings, Sparkle } from "lucide-react"
+import { useEffect, useState } from "react"
+import { Map, MessageSquare, Settings, Shield, Sparkle } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import ThemeToggle from "./theme-toggle"
 import { Button } from "@/components/ui/button"
 
@@ -27,6 +28,17 @@ export default function Navbar() {
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
+
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (searchParams.get("signin") === "required") {
+      setSignInOpen(true)
+      router.replace(pathname) // clean the URL after opening the modal
+    }
+  }, [searchParams, router, pathname])
 
   return (
     <>
@@ -55,6 +67,16 @@ export default function Navbar() {
               <MessageSquare className="h-4 w-4" />
               Feedback
             </Link>
+            {/* Admin link */}
+            {session?.user && (
+              <Link
+                href="/admin"
+                className="text-sm hover:text-primary transition-colors flex items-center gap-1"
+              >
+                <Shield className="h-4 w-4" />
+                Admin
+              </Link>
+            )}
           </div>
 
           <div className="flex items-center gap-4">
@@ -103,7 +125,6 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              /* Only rendering the Sign In button here */
               <Button className="text-sm" onClick={() => setSignInOpen(true)}>
                 Sign In
               </Button>
