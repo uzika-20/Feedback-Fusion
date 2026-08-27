@@ -32,17 +32,20 @@ export default async function FeedbackPage() {
         <div className="space-y-6">
             <GradientHeader title="Community Feedback" subTitle="Explore, Vote, and contribute to the features that matters most. Your votes shapes our product's future.">
                 <div className="flex flex-col gap-3 justify-center pt-4 w-full">
-                    <NewFeedbackButton
-                        className="w-full"
-                        label="New Feedback"
-                        icon="plus"
-                    />
-                    <Button className="rounded-lg bg-white text-black hover:bg-gray-100 px-5 py-2 text-sm font-medium w-full">
-                        <Link href="/roadmap" className="flex items-center justify-center gap-2">
-                            View Roadmap
-                            <Map className="h-4 w-4" />
-                        </Link>
-                    </Button>
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 w-full">
+                        <NewFeedbackButton
+                            size="lg"
+                            className="bg-white text-blue-600 hover:bg-gray-100 w-full sm:w-auto"
+                            label="Submit Feedback"
+                            icon="arrow"
+                        />
+                        <Button size="lg" className="bg-white text-black hover:bg-gray-100 w-full sm:w-auto">
+                            <Link href="/roadmap" className="flex items-center justify-center gap-2">
+                                View Roadmap
+                                <Map className="h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
             </GradientHeader>
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

@@ -11,18 +11,20 @@ export default function HomePage() {
       {/* HERO SECTION */}
       <GradientHeader title="Shape the future of our product" subTitle="Feedback fusion is where your ideas come to life .Suggest features,vote on what matters most, and follow our public roadmap ">
         <div className="flex flex-col gap-3 justify-center pt-4 w-full">
-          <NewFeedbackButton
-            size="lg"
-            className="bg-white text-blue-600 hover:bg-gray-100 w-full"
-            label="Submit Feedback"
-            icon="arrow"
-          />
-          <Button size="lg" className="bg-white text-black hover:bg-gray-100 w-full">
-            <Link href="/roadmap" className="flex items-center justify-center gap-2">
-              View Roadmap
-              <Map className="h-4 w-4" />
-            </Link>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center pt-4 w-full">
+            <NewFeedbackButton
+              size="lg"
+              className="bg-white text-blue-600 hover:bg-gray-100 w-full sm:w-auto"
+              label="Submit Feedback"
+              icon="arrow"
+            />
+            <Button size="lg" className="bg-white text-black hover:bg-gray-100 w-full sm:w-auto">
+              <Link href="/roadmap" className="flex items-center justify-center gap-2">
+                View Roadmap
+                <Map className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </GradientHeader>
       {/* Feature section */}
