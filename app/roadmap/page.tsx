@@ -6,6 +6,8 @@ import { BarChart, BarChart3, CheckCircle, Clock, Target } from "lucide-react";
 import { STATUS_GROUPS, STATUS_ORDER } from "../data/status-data";
 import { Badge } from "@/components/ui/badge";
 
+export const dynamic = "force-dynamic";
+
 function getStatusPercentage(posts: any, status: string) {
     const total = posts.length;
     const count = posts.filter((p: { status: string }) => p.status === status).length;
