@@ -8,6 +8,7 @@ import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle }
 import { getCategoryDesign } from "../data/category-data";
 import { Badge } from "@/components/ui/badge";
 import FeedbackList from "@/components/feedback-list";
+import NewFeedbackButton from "@/components/new-feedback-button";
 
 export default async function FeedbackPage() {
     const session = await auth();
@@ -40,12 +41,11 @@ export default async function FeedbackPage() {
             <div className="space-y-6">
                 <GradientHeader title="Community Feedback" subTitle="Explore, Vote, and contribute to the features that matters most. Your votes shapes our product's future.">
                     <div className="flex gap-3 justify-center pt-4">
-                        <Button className="rounded-lg bg-white text-blue-600 hover:bg-gray-100 px-5 py-2 text-sm font-medium">
-                            <Link href="/feedback/new" className="flex items-center gap-2">
-                                New Feedback
-                                <PlusIcon className="h-4 w-4" />
-                            </Link>
-                        </Button>
+                        <NewFeedbackButton
+                            
+                            label="New Feedback"
+                            icon="plus"
+                        />
                         <Button className="rounded-lg bg-white text-black hover:bg-gray-100 px-5 py-2 text-sm font-medium">
                             <Link href="/roadmap" className="flex items-center gap-2">
                                 View Roadmap

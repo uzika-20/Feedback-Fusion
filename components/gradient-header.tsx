@@ -17,7 +17,7 @@ export default function GradientHeader({title,subTitle,children}:GradientHeaderP
                 )}
                 {children}
             </div>
-            <div className="absolute right-0 top-0 h-full w-64 bg-linear-to-l from-white/10 to-transparent"></div>
+            <div className="absolute right-0 top-0 h-full w-64 bg-linear-to-l from-white/10 to-transparent pointer-events-none"></div>
         </div>
         
     )

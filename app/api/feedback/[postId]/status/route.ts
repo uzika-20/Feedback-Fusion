@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import { STATUS_ORDER } from "@/app/data/status-data";
+import { revalidatePath } from "next/cache";
 
 export async function PATCH(
   request: NextRequest,
@@ -14,7 +15,6 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Check if user is admin
     if ((session.user as any).role !== "ADMIN") {
       return NextResponse.json(
         { error: "Admin access required" },
@@ -30,21 +30,20 @@ export async function PATCH(
       return NextResponse.json({ error: "Invalid post id" }, { status: 400 });
     }
 
-    // Validate status
     if (!STATUS_ORDER.includes(status)) {
       return NextResponse.json({ error: "Invalid status" }, { status: 400 });
     }
 
     const updatedPost = await prisma.post.update({
       where: { id: numericPostId },
-      data: {
-        status,
-      },
-      include: {
-        author: true,
-        votes: true,
-      },
+      data: { status },
+      include: { author: true, votes: true },
     });
+
+    // Tell Next.js these pages need fresh data next time they're visited
+    revalidatePath("/roadmap");
+    revalidatePath("/feedback");
+    revalidatePath("/admin");
 
     return NextResponse.json(updatedPost);
   } catch (error) {
