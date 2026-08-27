@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { PlusIcon, ArrowRight } from "lucide-react";
 
 export default function NewFeedbackButton({
+    size,
     className,
     label = "New Feedback",
     icon = "plus",
@@ -30,8 +31,9 @@ export default function NewFeedbackButton({
 
     return (
         <Button
+            size={size}
             onClick={handleClick}
-            className={`!h-10 !w-[205px] rounded-xl bg-white text-base font-medium text-blue-600 hover:bg-gray-100 flex items-center justify-center !px-4 ${className ?? ""}`}
+            className={`h-10 rounded-xl bg-white text-base font-medium text-blue-600 hover:bg-gray-100 flex items-center justify-center px-4 ${className ?? ""}`}
         >
             <span className="flex items-center justify-center gap-2">
                 {label}
