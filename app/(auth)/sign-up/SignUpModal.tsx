@@ -35,7 +35,7 @@ export function SignUpModal({ isOpen, onClose, onSwitchToSignIn }: SignUpModalPr
     password?: string
   }>({})
 
-  const validateForm = () => {
+  const validateForm = (trimmedEmail: string) => {
     const newErrors: { name?: string; email?: string; password?: string } = {}
 
     // Name validation
@@ -44,9 +44,11 @@ export function SignUpModal({ isOpen, onClose, onSwitchToSignIn }: SignUpModalPr
     }
 
     // Email validation
-    if (!email.trim()) {
+    if (!trimmedEmail) {
       newErrors.email = "L'adresse email est obligatoire."
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (/\s/.test(email)) {
+      newErrors.email = "L'adresse email ne doit pas contenir d'espaces."
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
       newErrors.email = "Veuillez entrer une adresse email valide."
     }
 
@@ -64,8 +66,10 @@ export function SignUpModal({ isOpen, onClose, onSwitchToSignIn }: SignUpModalPr
   const handleCredentialsSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    const trimmedEmail = email.trim()
+
     // Run input validation restrictions
-    if (!validateForm()) {
+    if (!validateForm(trimmedEmail)) {
       toast.error("Veuillez corriger les erreurs dans le formulaire.")
       return
     }
@@ -77,7 +81,7 @@ export function SignUpModal({ isOpen, onClose, onSwitchToSignIn }: SignUpModalPr
       const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name: name.trim(), email: trimmedEmail, password }),
       })
 
       if (!res.ok) {
@@ -91,7 +95,7 @@ export function SignUpModal({ isOpen, onClose, onSwitchToSignIn }: SignUpModalPr
 
       // 2. Automatically Sign In after successful registration
       const signInRes = await signIn("credentials", {
-        email,
+        email: trimmedEmail,
         password,
         redirect: false,
         callbackUrl: "/",

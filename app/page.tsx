@@ -10,15 +10,15 @@ export default function HomePage() {
     <div className="space-y-12">
       {/* HERO SECTION */}
       <GradientHeader title="Shape the future of our product" subTitle="Feedback fusion is where your ideas come to life .Suggest features,vote on what matters most, and follow our public roadmap ">
-        <div className="flex gap-4 justify-center pt-4 ">
+        <div className="flex flex-col gap-3 justify-center pt-4 w-full">
           <NewFeedbackButton
             size="lg"
-            className="bg-white text-blue-600 hover:bg-gray-100"
+            className="bg-white text-blue-600 hover:bg-gray-100 w-full"
             label="Submit Feedback"
             icon="arrow"
           />
-          <Button size="lg" className="bg-white text-black hover:bg-gray-100">
-            <Link href="/roadmap" className="flex items-center gap-2">
+          <Button size="lg" className="bg-white text-black hover:bg-gray-100 w-full">
+            <Link href="/roadmap" className="flex items-center justify-center gap-2">
               View Roadmap
               <Map className="h-4 w-4" />
             </Link>
@@ -28,7 +28,7 @@ export default function HomePage() {
       {/* Feature section */}
       <section>
         <h2 className="text-center mb-8 text-3xl font-bold">How It Works</h2>
-        <div className="grid grid-cols-1 mf:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <Card>
             <CardHeader>
               <MessageSquare className="h-8 w-8 text-primary mb-2" />
@@ -68,22 +68,19 @@ export default function HomePage() {
         </div>
       </section>
       {/* stats */}
-      <section className="text-center ">
-        <div className="inline-grid grid-cols-3 gap-8">
+      <section className="text-center px-4 sm:px-0">
+        <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-md sm:max-w-none mx-auto">
           <div>
-            <div className="text-3xl font-bold">1,234+</div>
-            <div className="text-muted-foreground">Suggestions</div>
-
+            <div className="text-2xl sm:text-3xl font-bold">1,234+</div>
+            <div className="text-xs sm:text-base text-muted-foreground">Suggestions</div>
           </div>
           <div>
-            <div className="text-3xl font-bold">1,234+</div>
-            <div className="text-muted-foreground">Suggestions</div>
-
+            <div className="text-2xl sm:text-3xl font-bold">1,234+</div>
+            <div className="text-xs sm:text-base text-muted-foreground">Suggestions</div>
           </div>
           <div>
-            <div className="text-3xl font-bold">254+</div>
-            <div className="text-muted-foreground">Features Shipped</div>
-
+            <div className="text-2xl sm:text-3xl font-bold">254+</div>
+            <div className="text-xs sm:text-base text-muted-foreground">Features Shipped</div>
           </div>
         </div>
       </section>
