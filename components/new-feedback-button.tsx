@@ -33,7 +33,7 @@ export default function NewFeedbackButton({
         <Button
             size={size}
             onClick={handleClick}
-            className={`h-10 rounded-xl bg-white text-base font-medium text-blue-600 hover:bg-gray-100 flex items-center justify-center px-4 ${className ?? ""}`}
+            className={`rounded-xl bg-white text-blue-600 hover:bg-gray-100 flex items-center justify-center ${className ?? ""}`}
         >
             <span className="flex items-center justify-center gap-2">
                 {label}
