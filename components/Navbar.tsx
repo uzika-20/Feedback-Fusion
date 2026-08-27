@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Map, MessageSquare, Settings, Shield, Sparkle } from "lucide-react"
+import { Map, Menu, MessageSquare, Settings, Shield, Sparkle } from "lucide-react"
 import Link from "next/link"
 import { useSession, signOut } from "next-auth/react"
 import { useSearchParams, useRouter, usePathname } from "next/navigation"
@@ -20,6 +20,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { LogOut } from "lucide-react"
 
@@ -28,6 +34,7 @@ export default function Navbar() {
   const [signInOpen, setSignInOpen] = useState(false)
   const [signUpOpen, setSignUpOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -36,9 +43,40 @@ export default function Navbar() {
   useEffect(() => {
     if (searchParams.get("signin") === "required") {
       setSignInOpen(true)
-      router.replace(pathname) // clean the URL after opening the modal
+      router.replace(pathname)
     }
   }, [searchParams, router, pathname])
+
+  const navLinks = (
+    <>
+      <Link
+        href="/roadmap"
+        className="text-sm hover:text-primary flex items-center gap-2"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        <Map className="h-4 w-4" />
+        Roadmap
+      </Link>
+      <Link
+        href="/feedback"
+        className="text-sm hover:text-primary flex items-center gap-2"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        <MessageSquare className="h-4 w-4" />
+        Feedback
+      </Link>
+      {session?.user && (
+        <Link
+          href="/admin"
+          className="text-sm hover:text-primary transition-colors flex items-center gap-2"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          <Shield className="h-4 w-4" />
+          Admin
+        </Link>
+      )}
+    </>
+  )
 
   return (
     <>
@@ -50,39 +88,21 @@ export default function Navbar() {
                 <div className="h-8 w-8 rounded-lg bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center">
                   <Sparkle className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-xl font-bold">Feedback Fusion</span>
+                <span className="text-xl font-bold hidden sm:inline">Feedback Fusion</span>
               </div>
             </Link>
-            <Link
-              href="/roadmap"
-              className="text-sm hover:text-primary flex items-center gap-1"
-            >
-              <Map className="h-4 w-4" />
-              Roadmap
-            </Link>
-            <Link
-              href="/feedback"
-              className="text-sm hover:text-primary flex items-center gap-1"
-            >
-              <MessageSquare className="h-4 w-4" />
-              Feedback
-            </Link>
-            {/* Admin link */}
-            {session?.user && (
-              <Link
-                href="/admin"
-                className="text-sm hover:text-primary transition-colors flex items-center gap-1"
-              >
-                <Shield className="h-4 w-4" />
-                Admin
-              </Link>
-            )}
+
+            {/* Desktop nav links */}
+            <div className="hidden md:flex items-center gap-6">
+              {navLinks}
+            </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
+
             {status === "loading" ? (
-              <span className="text-sm text-muted-foreground">Loading...</span>
+              <span className="text-sm text-muted-foreground hidden sm:inline">Loading...</span>
             ) : session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger className="rounded-full">
@@ -125,10 +145,24 @@ export default function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button className="text-sm" onClick={() => setSignInOpen(true)}>
+              <Button className="text-sm" size="sm" onClick={() => setSignInOpen(true)}>
                 Sign In
               </Button>
             )}
+
+            {/* Mobile menu trigger */}
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger >
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-64">
+                <div className="flex flex-col gap-6 mt-8 px-4">
+                  {navLinks}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </nav>

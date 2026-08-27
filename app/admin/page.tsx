@@ -18,19 +18,19 @@ export default async function AdminPage() {
     if (!user || user.role !== "ADMIN") {
         redirect("/");
     }
-    const posts =  await prisma.post.findMany({
-        include:{
-            author:true,
-            votes:true
+    const posts = await prisma.post.findMany({
+        include: {
+            author: true,
+            votes: true
         },
-        orderBy:{
-            createdAt:"desc"
+        orderBy: {
+            createdAt: "desc"
         }
     })
     return (
-        <div className="container mx-auto">
-            <GradientHeader title="Admin Dashboard" subTitle="Manage feedbacks and update their status"/>
-            <AdminFeedbackTable posts={posts}/>
+        <div className="container mx-auto px-4 sm:px-6 space-y-6">
+            <GradientHeader title="Admin Dashboard" subTitle="Manage feedbacks and update their status" />
+            <AdminFeedbackTable posts={posts} />
         </div>
     )
 }
